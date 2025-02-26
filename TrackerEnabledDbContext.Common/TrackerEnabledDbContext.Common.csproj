@@ -11,19 +11,19 @@
     <AssemblyOriginatorKeyFile>MyKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>TrackerEnabledDbContext.Common</PackageId>
-    <Authors>Bilal Fazlani</Authors>
+    <PackageId>Slidoteka.TrackerEnabledDbContext.Common</PackageId>
+    <Authors>Bilal Fazlani, Yury Kozhanovskiy</Authors>
     <Company>Bilal</Company>
     <Product>Common Library for TrackerEnabledDbContext</Product>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>3.8</Version>
+    <Version>4.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
-    <AssemblyVersion>3.8</AssemblyVersion>
-    <FileVersion>3.8</FileVersion>
+    <AssemblyVersion>4.0</AssemblyVersion>
+    <FileVersion>4.0</FileVersion>
     <PackageTags>SQL Entity Framework Tacking Audit C# Database ASP.NET</PackageTags>
     <Copyright>2020</Copyright>
     <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
-    <ProjectUrl>https://github.com/bilal-fazlani/tracker-enabled-dbcontext</ProjectUrl>
+    <ProjectUrl>https://github.com/mcgrab/tracker-enabled-dbcontext</ProjectUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>Common nuget package required for TrackerEnabledDbContext &amp; TrackerEnabledDbContext.Identity</Description>
     <Summary>Common nuget package required for TrackerEnabledDbContext &amp; TrackerEnabledDbContext.Identity</Summary>

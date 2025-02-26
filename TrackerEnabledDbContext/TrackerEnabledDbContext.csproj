@@ -11,19 +11,29 @@
     <AssemblyOriginatorKeyFile>MyKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <PackageId>TrackerEnabledDbContext</PackageId>
-    <Authors>Bilal Fazlani</Authors>
+    <PackageLicenseFile>LICENSE.MD</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="LICENSE.MD" Pack="true" PackagePath="LICENSE.MD">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <PackageId>Slidoteka.TrackerEnabledDbContext</PackageId>
+    <Authors>Bilal Fazlani, Yury Kozhanovskiy</Authors>
     <Company>Bilal Fazlani</Company>
     <Product>Tracker Enabled DbContext</Product>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>3.8</Version>
+    <Version>4.0</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
-    <AssemblyVersion>3.8</AssemblyVersion>
-    <FileVersion>3.8</FileVersion>
-    <PackageTags>SQL Entity Framework Tacking Audit C# Database ASP.NET</PackageTags>
+    <AssemblyVersion>4.0</AssemblyVersion>
+    <FileVersion>4.0</FileVersion>
+    <PackageTags>SQL Entity Framework Tracking Audit C# Database ASP.NET</PackageTags>
     <Copyright>2020</Copyright>
     <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
     <ProjectUrl>https://github.com/bilal-fazlani/tracker-enabled-dbcontext</ProjectUrl>
+    <RepositoryUrl>https://github.com/mcgrab/tracker-enabled-dbcontext</RepositoryUrl>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Description>
       Use this to extend Entity Framework functionality to store changes in database. This is very useful for auditing purpose. It stores WHO changed WHAT and WHEN. It will let you choose which tables and columns you want to track with the help of attributes.
@@ -48,5 +58,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TrackerEnabledDbContext.Common\TrackerEnabledDbContext.Common.csproj" />
   </ItemGroup>
+  
 
 </Project>
