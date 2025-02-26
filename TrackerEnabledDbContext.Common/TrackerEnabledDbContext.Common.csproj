@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp3.1;netstandard2.1;</TargetFrameworks>
+    <TargetFrameworks>net6</TargetFrameworks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup>
@@ -29,13 +29,8 @@
     <Summary>Common nuget package required for TrackerEnabledDbContext &amp; TrackerEnabledDbContext.Identity</Summary>
   </PropertyGroup>
 
-  <ItemGroup Condition="$(TargetFramework.StartsWith('netcoreapp3')) or '$(TargetFramework)' == 'netstandard2.1'">
-    <PackageReference Include="EntityFramework" Version="6.4.0" />
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
   </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <PackageReference Include="EntityFramework" Version="6.2.0" />
-  </ItemGroup>
-
 
 </Project>

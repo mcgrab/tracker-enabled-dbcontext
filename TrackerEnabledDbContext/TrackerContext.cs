@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Data.Entity;
-using System.Data.Entity.Core.Objects;
-using System.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Linq;
@@ -14,6 +11,7 @@ using TrackerEnabledDbContext.Common.Configuration;
 using TrackerEnabledDbContext.Common.EventArgs;
 using TrackerEnabledDbContext.Common.Interfaces;
 using TrackerEnabledDbContext.Common.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace TrackerEnabledDbContext
 {
@@ -62,41 +60,7 @@ namespace TrackerEnabledDbContext
             _coreTracker = new CoreTracker(this);
         }
 
-        public TrackerContext(DbCompiledModel model)
-            : base(model)
-        {
-            _coreTracker = new CoreTracker(this);
-        }
-
-        public TrackerContext(string nameOrConnectionString)
-            : base(nameOrConnectionString)
-        {
-            _coreTracker = new CoreTracker(this);
-        }
-
-        public TrackerContext(string nameOrConnectionString, DbCompiledModel model)
-            : base(nameOrConnectionString, model)
-        {
-            _coreTracker = new CoreTracker(this);
-        }
-
-        public TrackerContext(DbConnection existingConnection, bool contextOwnsConnection)
-            : base(existingConnection, contextOwnsConnection)
-        {
-            _coreTracker = new CoreTracker(this);
-        }
-
-        public TrackerContext(DbConnection existingConnection, DbCompiledModel model, bool contextOwnsConnection)
-            : base(existingConnection, model, contextOwnsConnection)
-        {
-            _coreTracker = new CoreTracker(this);
-        }
-
-        public TrackerContext(ObjectContext objectContext, bool dbContextOwnsObjectContext)
-            : base(objectContext, dbContextOwnsObjectContext)
-        {
-            _coreTracker = new CoreTracker(this);
-        }
+        
 
         public virtual event EventHandler<AuditLogGeneratedEventArgs> OnAuditLogGenerated
         {
@@ -124,7 +88,7 @@ namespace TrackerEnabledDbContext
 
             _coreTracker.AuditChanges(userName, metaData);
 
-            IEnumerable<DbEntityEntry> addedEntries = _coreTracker.GetAdditions();
+            IEnumerable<EntityEntry> addedEntries = _coreTracker.GetAdditions();
             // Call the original SaveChanges(), which will save both the changes made and the audit records...Note that added entry auditing is still remaining.
             int result = base.SaveChanges();
             //By now., we have got the primary keys of added entries of added entiries because of the call to savechanges.
@@ -214,7 +178,7 @@ namespace TrackerEnabledDbContext
 
             _coreTracker.AuditChanges(userName, metadata);
 
-            IEnumerable<DbEntityEntry> addedEntries = _coreTracker.GetAdditions();
+            IEnumerable<EntityEntry> addedEntries = _coreTracker.GetAdditions();
 
             // Call the original SaveChanges(), which will save both the changes made and the audit records...Note that added entry auditing is still remaining.
             int result = await base.SaveChangesAsync(cancellationToken);
@@ -262,7 +226,7 @@ namespace TrackerEnabledDbContext
         ///     A task that represents the asynchronous save operation.  The task result
         ///     contains the number of objects written to the underlying database.
         /// </returns>
-        public override async Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
             if (!TrackingEnabled) return await base.SaveChangesAsync(CancellationToken.None);
 

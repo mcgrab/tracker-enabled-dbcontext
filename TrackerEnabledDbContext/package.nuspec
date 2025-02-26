@@ -2,10 +2,10 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
   <metadata>
     <id>TrackerEnabledDbContext</id>
-    <version>3.7</version>
+    <version>4.0</version>
     <title>Tracker Enabled DbContext</title>
-    <authors>Bilal Fazlani</authors>
-    <owners>Bilal Fazlani</owners>
+    <authors>Yury Kozhanovskiy</authors>
+    <owners>Yury Kozhanovskiy</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/bilal-fazlani/tracker-enabled-dbcontext</projectUrl>
     <description>

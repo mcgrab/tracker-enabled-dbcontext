@@ -7,6 +7,6 @@ namespace TrackerEnabledDbContext.Common.Configuration
         ////////////////////////// STORE /////////////////////////////
 
         internal static ConcurrentDictionary<string, TrackingConfigurationValue> EntityConfigStore = new ConcurrentDictionary<string, TrackingConfigurationValue>();
-        internal static ConcurrentDictionary<PropertyConfiguerationKey, TrackingConfigurationValue> PropertyConfigStore = new ConcurrentDictionary<PropertyConfiguerationKey, TrackingConfigurationValue>();
+        internal static ConcurrentDictionary<PropertyConfigurationKey, TrackingConfigurationValue> PropertyConfigStore = new ConcurrentDictionary<PropertyConfigurationKey, TrackingConfigurationValue>();
     }
 }

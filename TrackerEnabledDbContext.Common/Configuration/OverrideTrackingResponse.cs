@@ -52,7 +52,7 @@ namespace TrackerEnabledDbContext.Common.Configuration
             var newValue = new TrackingConfigurationValue(false, TrackingConfigurationPriority.High);
 
             TrackingDataStore.PropertyConfigStore.AddOrUpdate(
-                new PropertyConfiguerationKey(info.Name, typeof(T).FullName),
+                new PropertyConfigurationKey(info.Name, typeof(T).FullName),
                 newValue,
                 (existingKey, existingvalue) => newValue);
         }
@@ -62,7 +62,7 @@ namespace TrackerEnabledDbContext.Common.Configuration
             PropertyInfo info = property.GetPropertyInfo();
             var newValue = new TrackingConfigurationValue(true, TrackingConfigurationPriority.High);
             TrackingDataStore.PropertyConfigStore.AddOrUpdate(
-                new PropertyConfiguerationKey(info.Name, typeof(T).FullName),
+                new PropertyConfigurationKey(info.Name, typeof(T).FullName),
                 newValue,
                 (key, value) => newValue);
         }

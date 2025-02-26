@@ -2,9 +2,9 @@
 
 namespace TrackerEnabledDbContext.Common.Configuration
 {
-    internal class PropertyConfiguerationKey
+    internal class PropertyConfigurationKey
     {
-        internal PropertyConfiguerationKey(string propertyName, string typeFullName)
+        internal PropertyConfigurationKey(string propertyName, string typeFullName)
         {
             PropertyName = propertyName;
             TypeFullName = typeFullName;
@@ -15,7 +15,7 @@ namespace TrackerEnabledDbContext.Common.Configuration
 
         public override bool Equals(object obj)
         {
-            var otherEntity = (PropertyConfiguerationKey) obj;
+            var otherEntity = (PropertyConfigurationKey) obj;
             bool isNameSame = otherEntity.PropertyName.Equals(PropertyName, StringComparison.OrdinalIgnoreCase);
             bool isTypeSame = otherEntity.TypeFullName.Equals(TypeFullName, StringComparison.OrdinalIgnoreCase);
 

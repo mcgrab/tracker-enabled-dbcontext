@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Dynamic;
 using System.Linq;
 using TrackerEnabledDbContext.Common.Auditors.Helpers;
@@ -9,14 +9,15 @@ using TrackerEnabledDbContext.Common.Configuration;
 using TrackerEnabledDbContext.Common.Extensions;
 using TrackerEnabledDbContext.Common.Interfaces;
 using TrackerEnabledDbContext.Common.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace TrackerEnabledDbContext.Common.Auditors
 {
     internal class LogAuditor : IDisposable
     {
-        private readonly DbEntityEntry _dbEntry;
+        private readonly EntityEntry _dbEntry;
 
-        internal LogAuditor(DbEntityEntry dbEntry)
+        internal LogAuditor(EntityEntry dbEntry)
         {
             _dbEntry = dbEntry;
         }
@@ -37,7 +38,7 @@ namespace TrackerEnabledDbContext.Common.Auditors
             DateTime changeTime = DateTime.UtcNow;
 
             //changed to static class by Aaron Sulwer 3/16/2018
-            List<PropertyConfiguerationKey> keyNames = (context as DbContext).GetKeyNames(entityType).ToList();
+            List<PropertyConfigurationKey> keyNames = (context as DbContext).GetKeyNames(entityType).ToList();
 
             var newlog = new AuditLog
             {
@@ -95,8 +96,8 @@ namespace TrackerEnabledDbContext.Common.Auditors
         }
 
         private object GetPrimaryKeyValuesOf(
-            DbEntityEntry dbEntry,
-            List<PropertyConfiguerationKey> properties)
+            EntityEntry dbEntry,
+            List<PropertyConfigurationKey> properties)
         {
             if (properties.Count == 0)
             {

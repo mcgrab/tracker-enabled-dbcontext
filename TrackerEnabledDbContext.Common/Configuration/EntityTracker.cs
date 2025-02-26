@@ -14,11 +14,11 @@ namespace TrackerEnabledDbContext.Common.Configuration
             //add high priority tracking to all properties
             foreach (var property in allPublicInstanceProperties)
             {
-                Func<PropertyConfiguerationKey, TrackingConfigurationValue, TrackingConfigurationValue> factory =
+                Func<PropertyConfigurationKey, TrackingConfigurationValue, TrackingConfigurationValue> factory =
                     (key,value) => new TrackingConfigurationValue(true, TrackingConfigurationPriority.High);
 
                 TrackingDataStore.PropertyConfigStore.AddOrUpdate(
-                    new PropertyConfiguerationKey(property.Name, typeof (T).FullName),
+                    new PropertyConfigurationKey(property.Name, typeof (T).FullName),
                     new TrackingConfigurationValue(true, TrackingConfigurationPriority.High),
                     factory
                     );

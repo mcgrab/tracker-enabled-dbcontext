@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using TrackerEnabledDbContext.Common.Auditors.Comparators;
 using TrackerEnabledDbContext.Common.Auditors.Helpers;
 using TrackerEnabledDbContext.Common.Configuration;
@@ -13,11 +14,11 @@ namespace TrackerEnabledDbContext.Common.Auditors
 {
     public class ChangeLogDetailsAuditor : ILogDetailsAuditor
     {
-        protected readonly DbEntityEntry DbEntry;
+        protected readonly EntityEntry DbEntry;
         private readonly AuditLog _log;
         private readonly DbEntryValuesWrapper _dbEntryValuesWrapper;
 
-        public ChangeLogDetailsAuditor(DbEntityEntry dbEntry, AuditLog log)
+        public ChangeLogDetailsAuditor(EntityEntry dbEntry, AuditLog log)
         {
             DbEntry = dbEntry;
             _log = log;
@@ -31,26 +32,16 @@ namespace TrackerEnabledDbContext.Common.Auditors
             foreach (string propertyName in PropertyNamesOfEntity())
             {
                 if (PropertyTrackingConfiguration.IsTrackingEnabled(
-                    new PropertyConfiguerationKey(propertyName, entityType.FullName), entityType)
+                    new PropertyConfigurationKey(propertyName, entityType.FullName), entityType)
                     && IsValueChanged(propertyName))
                 {
-                    if (IsComplexType(propertyName))
+                    yield return new AuditLogDetail
                     {
-                        foreach (var auditLogDetail in CreateComplexTypeLogDetails(propertyName))
-                        {
-                            yield return auditLogDetail;
-                        }
-                    }
-                    else
-                    {
-                        yield return new AuditLogDetail
-                        {
-                            PropertyName = propertyName,
-                            OriginalValue = OriginalValue(propertyName)?.ToString(),
-                            NewValue = CurrentValue(propertyName)?.ToString(),
-                            Log = _log
-                        };
-                    }
+                        PropertyName = propertyName,
+                        OriginalValue = OriginalValue(propertyName)?.ToString(),
+                        NewValue = CurrentValue(propertyName)?.ToString(),
+                        Log = _log
+                    };
                 }
             }
         }
@@ -65,7 +56,7 @@ namespace TrackerEnabledDbContext.Common.Auditors
             var propertyValues = (StateOfEntity() == EntityState.Added)
                 ? DbEntry.CurrentValues
                 : DbEntry.OriginalValues;
-            return propertyValues.PropertyNames;
+            return propertyValues.Properties.Select(x => x.Name);
         }
 
         protected virtual bool IsValueChanged(string propertyName)
@@ -92,46 +83,5 @@ namespace TrackerEnabledDbContext.Common.Auditors
             var value = DbEntry.Property(propertyName).CurrentValue;
             return value;
         }
-
-        private bool IsComplexType(string propertyName)
-        {
-            var entryMember = DbEntry.Member(propertyName) as DbComplexPropertyEntry;
-
-            return entryMember != null;
-        }
-
-        private IEnumerable<AuditLogDetail> CreateComplexTypeLogDetails(string propertyName)
-        {
-            var entryMember = DbEntry.Member(propertyName) as DbComplexPropertyEntry;
-
-            if (entryMember != null)
-            {
-                var complexTypeObj = entryMember.CurrentValue.GetType();
-
-                foreach (var pi in complexTypeObj.GetProperties())
-                {
-                    var complexTypePropertyName = $"{propertyName}_{pi.Name}";
-                    var complexTypeOrigValue = OriginalValue(propertyName);
-                    var complexTypeNewValue = CurrentValue(propertyName);
-
-                    var origValue = complexTypeOrigValue == null ? null : pi.GetValue(complexTypeOrigValue);
-                    var newValue = complexTypeNewValue == null ? null : pi.GetValue(complexTypeNewValue);
-
-                    Comparator comparator = ComparatorFactory.GetComparator(complexTypeObj);
-
-                    if (!comparator.AreEqual(newValue, origValue))
-                    {
-                        yield return new AuditLogDetail
-                        {
-                            PropertyName = complexTypePropertyName,
-                            OriginalValue = origValue?.ToString(),
-                            NewValue = newValue?.ToString(),
-                            Log = _log
-                        };
-                    }
-                }
-            }
-        }
-
     }
 }

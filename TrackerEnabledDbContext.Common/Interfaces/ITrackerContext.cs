@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +31,5 @@ namespace TrackerEnabledDbContext.Common.Interfaces
         Task<int> SaveChangesAsync(object userName, CancellationToken cancellationToken);
         Task<int> SaveChangesAsync(int userId);
         Task<int> SaveChangesAsync(string userName);
-
-
     }
 }

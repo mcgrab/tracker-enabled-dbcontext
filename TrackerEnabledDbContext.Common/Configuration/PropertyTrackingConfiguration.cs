@@ -7,7 +7,7 @@ namespace TrackerEnabledDbContext.Common.Configuration
 {
     internal static class PropertyTrackingConfiguration
     {
-        internal static bool IsTrackingEnabled(PropertyConfiguerationKey property, Type entityType)
+        internal static bool IsTrackingEnabled(PropertyConfigurationKey property, Type entityType)
         {
             if (typeof(IUnTrackable).IsAssignableFrom(entityType)) return false;
 

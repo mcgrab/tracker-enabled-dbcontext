@@ -1,16 +1,17 @@
-﻿using System.Data.Entity.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using TrackerEnabledDbContext.Common.Configuration;
 
 namespace TrackerEnabledDbContext.Common.Auditors.Helpers
 {
     public class DbEntryValuesWrapper
     {
-        protected readonly DbEntityEntry _dbEntry;
-        private DbPropertyValues _entryValues = null;
+        protected readonly EntityEntry _dbEntry;
+        private PropertyValues _entryValues = null;
 
-        private DbPropertyValues EntryPropertyValues => _entryValues ?? (_entryValues = _dbEntry.GetDatabaseValues());
+        private PropertyValues EntryPropertyValues => _entryValues ?? (_entryValues = _dbEntry.GetDatabaseValues());
 
-        public DbEntryValuesWrapper(DbEntityEntry dbEntry)
+        public DbEntryValuesWrapper(EntityEntry dbEntry)
         {
             _dbEntry = dbEntry;
         }
