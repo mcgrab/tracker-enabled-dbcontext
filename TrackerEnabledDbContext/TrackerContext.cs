@@ -61,6 +61,11 @@ namespace TrackerEnabledDbContext
             _coreTracker = new CoreTracker(this);
         }
 
+        public TrackerContext(DbContextOptions databaseOptions)
+        {
+            _coreTracker = new CoreTracker(this);
+        }
+
         
 
         public virtual event EventHandler<AuditLogGeneratedEventArgs> OnAuditLogGenerated

@@ -25,10 +25,10 @@
     <Company>Bilal Fazlani</Company>
     <Product>Tracker Enabled DbContext</Product>
     <VersionSuffix>$(VersionSuffix)</VersionSuffix>
-    <Version>4.0</Version>
+    <Version>4.1</Version>
     <Version Condition=" '$(VersionSuffix)' != '' ">$(Version)-$(VersionSuffix)</Version>
-    <AssemblyVersion>4.0</AssemblyVersion>
-    <FileVersion>4.0</FileVersion>
+    <AssemblyVersion>4.1</AssemblyVersion>
+    <FileVersion>4.1</FileVersion>
     <PackageTags>SQL Entity Framework Tracking Audit C# Database ASP.NET</PackageTags>
     <Copyright>2020</Copyright>
     <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
